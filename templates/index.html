@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breast Cancer Prediction</title>
+</head>
+
+<!--Add some classes to allow for the output for benign to be green and malignant to be read-->
+<style>
+    .result-box {
+        margin-top: 20px;
+        padding: 10px;
+        font-weight: bold;
+        width: fit-content;
+    }
+
+    .benign {
+        background-color: #c8f7c5;
+    }
+
+    .malignant {
+        background-color: #f7c5c5;
+    }
+
+    .unknown {
+        background-color: #e0e0e0;
+    }
+
+/*I also want the form to look nicer like the text is variable length for the titles and so the input fields look janky... align the fields on right side and make values centered in them */
+/* ---------- Form Layout Styling ---------- */
+.form-container {
+    width: 550px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 120px;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.form-row label {
+    text-align: left;
+    font-weight: bold;
+}
+
+.form-row input {
+    width: 100%;
+    text-align: center;   /* Centers digits inside box */
+    padding: 5px;
+}
+
+
+</style>
+
+
+<body>
+
+    <h1>Breast Cancer Prediction (Naive Bayes)</h1>
+    
+    <!--Now the form inputs are inside of the nicer formatted class we made above so that things are aligned etc-->
+    
+    <form method="POST" action="/predict" class="form-container">
+
+    <div class="form-row">
+        <label for="clump_thickness">Clump Thickness:</label>
+        <input type="number" id="clump_thickness" name="clump_thickness" min="1" max="10" step="1" required>
+    </div>
+
+    <div class="form-row">
+        <label for="uniformity_cell_size">Uniformity Cell Size:</label>
+        <input type="number" id="uniformity_cell_size" name="uniformity_cell_size" min="1" max="10" step="1" required>
+    </div>
+
+    <div class="form-row">
+        <label for="uniformity_cell_shape">Uniformity Cell Shape:</label>
+        <input type="number" id="uniformity_cell_shape" name="uniformity_cell_shape" min="1" max="10" step="1" required>
+    </div>
+
+    <div class="form-row">
+        <label for="marginal_adhesion">Marginal Adhesion:</label>
+        <input type="number" id="marginal_adhesion" name="marginal_adhesion" min="1" max="10" step="1" required>
+    </div>
+
+    <div class="form-row">
+        <label for="single_epithelial_cell_size">Single Epithelial Cell Size:</label>
+        <input type="number" id="single_epithelial_cell_size" name="single_epithelial_cell_size" min="1" max="10" step="1" required>
+    </div>
+
+    <div class="form-row">
+        <label for="bare_nuclei">Bare Nuclei:</label>
+        <input type="number" id="bare_nuclei" name="bare_nuclei" min="1" max="10" step="1" required>
+    </div>
+
+    <div class="form-row">
+        <label for="bland_chromatin">Bland Chromatin:</label>
+        <input type="number" id="bland_chromatin" name="bland_chromatin" min="1" max="10" step="1" required>
+    </div>
+
+    <div class="form-row">
+        <label for="normal_nucleoli">Normal Nucleoli:</label>
+        <input type="number" id="normal_nucleoli" name="normal_nucleoli" min="1" max="10" step="1" required>
+    </div>
+
+    <div class="form-row">
+        <label for="mitoses">Mitoses:</label>
+        <input type="number" id="mitoses" name="mitoses" min="1" max="10" step="1" required>
+    </div>
+
+    <br>
+
+    <button type="submit">Predict</button>
+
+</form>
+
+
+
+
+
+    <!--Now this section is enhanced to also throw background colors... green for benign and red for malignant -->
+{% if result %}
+
+    <div class="result-box 
+        {% if 'Benign' in result %}
+            benign
+        {% elif 'Malignant' in result %}
+            malignant
+        {% else %}
+            unknown
+        {% endif %}
+    ">
+        Result: {{ result }}
+    </div>
+
+    <br>
+    <a href="/">Back to Home</a>
+
+{% endif %}
+
+</body>
+</html>
