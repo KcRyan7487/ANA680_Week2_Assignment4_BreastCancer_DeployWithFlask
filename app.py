@@ -1,5 +1,4 @@
 from flask import Flask, request, jsonify, render_template, redirect, url_for
-from sklearn.linear_model import LinearRegression
 import numpy as np
 import pickle
 from pathlib import Path
